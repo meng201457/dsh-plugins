@@ -1,0 +1,10 @@
+# dsh-archive-manager — browse archived sessions per workspace from the sidebar.
+# The Host half answers /api/dsh-archive-manager/* with the workspace registry's
+# archive set, session titles and on-disk sizes, and performs the permanent
+# delete (registry detach + unarchive + unpin, then the session log directory).
+# The Client half adds the sidebar entry and the manager page.
+- insert:
+    - id: dsh-archive-manager
+      name: dsh-archive-manager
+      config:
+        enabled: true

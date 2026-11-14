@@ -1,0 +1,62 @@
+# mi-note — connect a Xiaomi account by QR and keep a local Markdown folder in
+# step with its cloud notes.
+#
+# The Host half owns the account session (QR login, credential records, the
+# passToken restore that re-issues an expired serviceToken) and the local
+# mirror: the note-id map, the sync baseline, and every file write. The Client
+# half adds the left-sidebar panel entry, the main panel, and the matching
+# Settings section; all of them render the same page.
+#
+# The second row declares the "小米笔记" agent preset. The `mi_note_sync` tool is
+# registered by the Host half above, so it is already available to any agent;
+# the preset only decides the persona and the file tools that go with it.
+- insert:
+    - id: mi-note
+      name: mi-note
+      config:
+        # Absolute path of the notes folder. Empty means "not chosen yet": the
+        # settings page asks for it instead of guessing a location.
+        workspaceDir: ''
+        mirrorDir: mi-notes
+        defaultLimit: 50
+        maxPages: 10
+        timeoutMs: 30000
+
+    - id: preset-mi-note
+      name: '@deepseek-ai/dsh-agent-preset'
+      config:
+        id: mi-note
+        name: 小米笔记
+        description: 在 DSH 工作区整理工作规范，编辑本地 Markdown，并按指令同步到小米笔记供手机阅读。
+        order: 40
+        plugins:
+          - id: persona
+            name: '@deepseek-ai/dsh-persona'
+            config:
+              prefix: |
+                你是「小米笔记」工作区的写作助手。你的任务是把工作规范、标准、操作规程和检查清单整理成适合手机阅读的 Markdown。文件范围是当前 DSH 会话的笔记工作区；用户和你编辑的是同一份本地文件，保存后可以用 DSH 原生预览查看。
+                写作时优先使用短标题、条款号、有序列表和分组列表。保留原规范的条款、数值、单位、适用条件、例外和来源。区分原文要求与整理建议。依据不足时保留不确定性，并指出需要核对的地方。把表格改成列表时，逐项保留字段含义与对应关系。
+                小米笔记的正文没有代码块、表格、链接和 H4 以下标题的标签：代码围栏与表格会退化成普通段落，链接会变成不可点击的文字。需要长期保存这些结构时，先说明会丢失什么，再用短标题加有序列表改写。
+                所有云端读写都通过 mi_note_sync。按用户指令执行：
+                - 「整理这篇」「编辑这篇」：改本地 Markdown，汇报保存位置和主要改动。
+                - 「整理并同步」：先保存，再 preflight 指定文件；没有阻塞项时直接 push，不再重复确认。
+                - 「同步这篇」：preflight 后 push 指定的已关联文件。云端也改过时报告冲突，不要强行覆盖。
+                - 「发布这篇」：对还没有关联的文件用 publish；如果它可能是已有关联文件改名后的新路径，先确认原笔记身份，候选不唯一时列出候选让用户选定。
+                - 「拉取这篇」「拉取云端」：用 pull 拉指定笔记或云端列表，绝不覆盖本地未同步的编辑。
+                - 「合并这篇」：用 compare 取本地、云端与上次同步三份正文，说明差异并生成合并稿；用户确认后，才可以用 push 带 resolve 提交。
+                只在用户指定的范围内写入。能唯一确定目标时直接处理；有多个候选时列出相对路径请用户选定。本地删除只移除本地副本，云端回收站要单独的明确指令，本插件不会删除云端笔记。写入结果不明确时先核对云端状态，避免重复发布。
+                完成后如实报告：本地改了什么、云端提交了哪些文件、哪些冲突或格式损失尚未解决。
+          - id: tool-fs
+            name: '@deepseek-ai/dsh-tool-fs'
+            config:
+              applyPatch: false
+          - id: tool-fs-search
+            name: '@deepseek-ai/dsh-tool-fs-search'
+            config:
+              sampleOverCapGlobResults: false
+          - id: tool-todo
+            name: '@deepseek-ai/dsh-tool-todo'
+            config:
+              allowParallelInProgress: true
+          - id: tool-ask-user
+            name: '@deepseek-ai/dsh-tool-ask-user'

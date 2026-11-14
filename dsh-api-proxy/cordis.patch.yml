@@ -1,0 +1,16 @@
+# dsh-api-proxy — model API traffic through an HTTP/HTTPS proxy.
+# The Host half patches the process-wide `fetch` so that only the endpoints the
+# user selected in Settings → 网络代理 are tunnelled; everything else stays direct.
+# The Client half adds that settings page.
+- insert:
+    - id: dsh-api-proxy
+      name: dsh-api-proxy
+      config:
+        enabled: false
+        host: 127.0.0.1
+        port: 7890
+        username: ""
+        password: ""
+        targets: []
+        extraHosts: []
+        skipPrivateNetworks: true

@@ -1,0 +1,27 @@
+# dsh-lan-gateway — serve this Harness' Web UI on the LAN / external domain.
+# The Host half reads the live Web server port and the process launch token,
+# then runs an HTTP reverse proxy (default 0.0.0.0:3080) that authenticates
+# upstream itself, so a phone or tablet only needs the token link shown in
+# Settings → LAN access. On startup the same tokenized external URL can be
+# pushed through OneBot v11 to a QQ group / private chat.
+- insert:
+    - id: dsh-lan-gateway
+      name: dsh-lan-gateway
+      config:
+        enabled: true
+        port: 3080
+        bindHost: 0.0.0.0
+        requireToken: true
+        # Router / reverse-proxy entry used for links and the startup notice.
+        publicUrl: ""
+        notifyOnStartup: true
+        notifyGroup: true
+        groupId: ""
+        notifyPrivate: false
+        userId: ""
+        oneBotWsUrl: "ws://127.0.0.1:3001"
+        # The real token lives in $DSH_HOME/dsh-lan-gateway.json, not in this patch.
+        oneBotAccessToken: ""
+        notifyTitle: "DSH 已启动"
+        includeTimestamp: true
+        notifyTimeoutMs: 15000

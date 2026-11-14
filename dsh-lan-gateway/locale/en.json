@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "LAN access",
+    "description": "Reverse-proxy this Harness' Web UI to a local port, reading the DSH port and launch token automatically; optionally push the access token to QQ over OneBot on startup (requires an external domain)."
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Network Proxy",
+    "description": "Route the configured model API endpoints through an HTTP/HTTPS (CONNECT) proxy with its own IP, port and optional credentials."
+  }
+}

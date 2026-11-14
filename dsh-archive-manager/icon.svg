@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Archived sessions">
+  <defs>
+    <linearGradient id="dsham-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4c51bf"/>
+      <stop offset="1" stop-color="#2a2f6b"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#dsham-bg)"/>
+  <rect x="12" y="12" width="40" height="9" rx="3" fill="#c7d2fe"/>
+  <path d="M15 23h34v27a4 4 0 0 1-4 4H19a4 4 0 0 1-4-4z" fill="#eef2ff"/>
+  <path d="M25 33h14" stroke="#4c51bf" stroke-width="4" stroke-linecap="round"/>
+  <path d="M25 42h9" stroke="#a5b4fc" stroke-width="3.4" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Mi Notes",
+    "description": "Connects a Mi account by scanning a QR code and keeps a local Markdown folder in step with its Xiaomi Cloud notes. Open it from the **Mi Notes** entry in the left sidebar, or from **Settings → Mi Notes**; both show the same page. Scan the code with the Mi Account app, choose an absolute notes folder, then pull notes down as `.md` files you can edit in any Windows editor. That page is read-only: status, preflight and pull. Sending edits back — push to a linked note, publish a new one, compare local/cloud/last-synced bodies for a merge — is done by asking the agent to call the `mi_note_sync` tool with the files named explicitly, and a local file is never overwritten while it has unsaved changes. Renaming or moving a file in Explorer keeps its cloud note id. Nothing is ever deleted in the cloud. The account tokens live in the DSH credential store, never in configuration; an expired short-lived token is renewed silently from the stored long-lived one, so scanning is needed only when that one is rejected. Turning the plugin off stops every request and leaves the local files, the note-id map and the sync baseline on disk. The bundle also declares a **小米笔记** agent preset whose persona is written for turning work standards into phone-readable notes."
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "网络代理",
+    "description": "为已配置的模型 API 走 HTTP/HTTPS（CONNECT）代理，可指定 IP、端口与可选账号密码。"
+  }
+}
